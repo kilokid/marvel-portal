@@ -24,6 +24,7 @@ class MarvelService {
 
     #transformCharacter = (char) => {
         return {
+            id: char.id,
             name: char.name,
             description: !char.description ? 'There is no information about this character' : char.description.length > 210 ? `${char.description.slice(0, 210)}...` : char.description,
             thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
