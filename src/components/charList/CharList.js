@@ -31,9 +31,9 @@ class CharList extends Component {
         document.addEventListener('scroll', this.onRequestByScroll);
     };
 
-    // componentWillUnmount = () => {
-    //     window.removeEventListener('scroll', this.onRequestByScroll);
-    // }
+    componentWillUnmount = () => {
+        window.removeEventListener('scroll', this.onRequestByScroll);
+    }
 
     onRequestByScroll = () => {
         if (this.state.offset < 219) return;
