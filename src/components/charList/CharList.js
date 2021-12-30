@@ -24,8 +24,26 @@ class CharList extends Component {
     };
     
     componentDidMount = () => {
-        this.onReuqest();
+        if (this.state.offset < 219) {
+            this.onReuqest();
+        }
+
+        document.addEventListener('scroll', this.onRequestByScroll);
     };
+
+    // componentWillUnmount = () => {
+    //     window.removeEventListener('scroll', this.onRequestByScroll);
+    // }
+
+    onRequestByScroll = () => {
+        if (this.state.offset < 219) return;
+        if (this.state.newItemLoading) return;
+    
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
+            this.onCharListLoading();
+            this.onReuqest(this.state.offset);
+        }
+    }
 
     onReuqest = (offset) => {
         this.onCharListLoading();
