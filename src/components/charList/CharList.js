@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
@@ -7,6 +8,10 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import './charList.scss';
 
 class CharList extends Component {
+    static defaultProps = {
+        onCharSelected: () => {console.log('An error has occurred')}
+    }
+
     marvelService = new MarvelService();
 
     state = {
@@ -107,6 +112,10 @@ class CharList extends Component {
             </div>
         )
     };
+}
+
+CharList.propTypes = {
+    onCharSelected: PropTypes.func.isRequired
 }
 
 export default CharList;
