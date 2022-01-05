@@ -31,6 +31,7 @@ class CharList extends Component {
         document.addEventListener('scroll', this.onRequestByScroll);
     };
 
+
     componentWillUnmount = () => {
         window.removeEventListener('scroll', this.onRequestByScroll);
     }
@@ -81,15 +82,40 @@ class CharList extends Component {
         });
     };
 
+    itemRefs = [];
+
+    setRef = (ref) => {
+        this.itemRefs.push(ref);
+    }
+
+    focusOnItem = (id) => {
+        this.itemRefs.forEach((item) => item.classList.remove('char__item_selected'));
+        this.itemRefs[id].classList.add('char__item_selected');
+        this.itemRefs[id].classList.add('char__item_selected');
+        this.itemRefs[id].focus();
+    }
+
     renderItems = (arr) => {
-        const items = arr.map(item => {
+        const items = arr.map((item, i) => {
             const imgStyle = /image_not_available/.test(item.thumbnail) ? {'objectFit': 'fill'} : null;
 
             return (
                 <li 
                     className="char__item" 
                     key={item.id} 
-                    onClick={() => this.props.onCharSelected(item.id)}
+                    onClick={() => {
+                        this.props.onCharSelected(item.id);
+                        this.focusOnItem(i);
+                    }}
+                    tabIndex={0}
+                    ref={this.setRef}
+                    onKeyPress={(e) => {
+                        e.preventDefault();
+                        if (e.key === ' ' || e.key === "Enter") {
+                            this.props.onCharSelected(item.id);
+                            this.focusOnItem(i);
+                        }
+                    }}
                 >
                     <img src={item.thumbnail} alt={item.name} style={imgStyle} />
                     <div className="char__name">{item.name}</div>
