@@ -17,26 +17,9 @@ const CharList = (props) => {
     const {loading, error, getAllCharacters} = useMarvelService();
 
     useEffect(() => {
-        document.addEventListener('scroll', onRequestByScroll);
-
-        return () => {
-            window.removeEventListener('scroll', onRequestByScroll);
-        }
+        onReuqest(offset, true);
     }, []);
 
-    useEffect(() => {
-        onReuqest(offset, true);
-    }, [charEnded]);
-
-    const onRequestByScroll = (event) => {
-        if (offset < 219) return;
-        if (newItemLoading) return;
-    
-        if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 1) {
-            onReuqest(offset);
-        }
-    }
-    // window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1
     const onReuqest = (offset, initial) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true);
 
