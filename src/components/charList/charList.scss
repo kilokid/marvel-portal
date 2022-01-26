@@ -40,4 +40,24 @@
         text-transform: uppercase;
         color: #fff;
     }
+    &__anim {
+        &-enter {
+            transform:translateX(-100%) scale(0.8);
+        }
+        &-enter-active {
+            transition: all 500ms;
+            transform:translateX(0%) scale(1);
+        }
+        &-enter-done {
+            transition: all 500ms;
+            transform:translateX(0%) scale(1);
+        }
+        &-exit {
+            transition: all 500ms;
+        }
+        &-exit-active {
+            transform:translateX(-100%) rotate(60deg);
+            transition: all 500mss;
+        }
+    }
 }

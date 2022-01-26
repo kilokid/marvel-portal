@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
@@ -52,32 +53,35 @@ const CharList = (props) => {
             const imgStyle = /image_not_available/.test(item.thumbnail) ? {'objectFit': 'fill'} : null;
 
             return (
-                <li 
-                    className="char__item" 
-                    key={item.id} 
-                    onClick={() => {
-                        props.onCharSelected(item.id);
-                        focusOnItem(i);
-                    }}
-                    tabIndex={0}
-                    ref={el => itemRefs.current[i] = el}
-                    onKeyPress={(e) => {
-                        e.preventDefault();
-                        if (e.key === ' ' || e.key === "Enter") {
+                <CSSTransition key={item.id} timeout={300} classNames="char__anim" >
+                    <li 
+                        className="char__item" 
+                        onClick={() => {
                             props.onCharSelected(item.id);
                             focusOnItem(i);
-                        }
-                    }}
-                >
-                    <img src={item.thumbnail} alt={item.name} style={imgStyle} />
-                    <div className="char__name">{item.name}</div>
-                </li>
+                        }}
+                        tabIndex={0}
+                        ref={el => itemRefs.current[i] = el}
+                        onKeyPress={(e) => {
+                            e.preventDefault();
+                            if (e.key === ' ' || e.key === "Enter") {
+                                props.onCharSelected(item.id);
+                                focusOnItem(i);
+                            }
+                        }}
+                    >
+                        <img src={item.thumbnail} alt={item.name} style={imgStyle} />
+                        <div className="char__name">{item.name}</div>
+                    </li>
+                </CSSTransition>
             );
         });
 
         return (
             <ul className="char__grid">
-                {items}
+                <TransitionGroup className="char__grid" component={null}>
+                    {items}
+                </TransitionGroup>
             </ul>
         )
     }
@@ -94,7 +98,7 @@ const CharList = (props) => {
             {items}
             <button 
                 className="button button__main button__long"
-                disabled={newItemLoading}
+                disabled={newItemLoading || loading}
                 style={{'display': charEnded ? 'none' : 'block'}}
                 onClick={() => onReuqest(offset)}
             >
