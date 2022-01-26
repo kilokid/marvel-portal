@@ -33,4 +33,24 @@
             transform: translateY(-5px);
         }
     }
+    &__anim {
+        &-enter {
+            transform:translateY(-25%) scale(0.8);
+        }
+        &-enter-active {
+            transition: all 500ms;
+            transform:translateY(0%) scale(1);
+        }
+        &-enter-done {
+            transition: all 500ms;
+            transform:translateY(0%) scale(1);
+        }
+        &-exit {
+            transition: all 500ms;
+        }
+        &-exit-active {
+            transform:translateY(-25%) rotate(60deg);
+            transition: all 500mss;
+        }
+    }
 }
